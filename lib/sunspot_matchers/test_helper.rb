@@ -1,10 +1,14 @@
 require 'sunspot'
-require 'minitest/autorun'
 require File.expand_path('../matchers', __FILE__)
 require File.expand_path('../sunspot_session_spy', __FILE__)
 module SunspotMatchers
   class HaveSearchParamsForSession
-    include MiniTest::Assertions
+    if const_defined? 'MiniTest'
+      include MiniTest::Assertions
+    else
+      include Test::Unit::Assertions
+    end
+
 
     def initialize(session, method, *args, &block)
       @session = session
